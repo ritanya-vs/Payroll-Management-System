@@ -7,10 +7,10 @@ app.use(cors());
 app.use(express.json());
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: 'root',
-    password: 'Ritz2004#',
-    database: 'dbms'
+    host: "sql12.freesqldatabase.com",
+    user: 'sql12759357',
+    password: 'VgDrAIHzR8',
+    database: 'sql12759357'
 });
 
 app.post('/login', (req, res) => {
@@ -187,6 +187,6 @@ app.post('/home/payroll', (req, res) => {
 });
 
 
-app.listen(8081, () => {
+app.listen(process.env.PORT, () => {
     console.log("listening");
 });

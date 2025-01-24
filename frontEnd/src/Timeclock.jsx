@@ -22,7 +22,7 @@ const Timeclock = () => {
     };
 
     const saveTimeClockData = (emp_id, att_date, punch_in, punch_out) => {
-        axios.post('http://localhost:8081/home/timeclock', {
+        axios.post(`${process.env.NODE_ENV === "production" ? process.env.DOMAIN + "/home/timeclock":"http://localhost:8081/home/timeclock" }`, {
             emp_id,
             att_date,
             punch_in,
