@@ -2,13 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+const backendurl = import.meta.env.VITE_BACKEND;
 
 const Employee = () => {
     const [employee, setEmployee] = useState([])
     const navigate = useNavigate()
     useEffect(() => {
 
-        axios.get(`${process.env.NODE_ENV === "production" ? process.env.BACKEND + "/employee":"http://localhost:8081/employee" }`)
+        axios.get(`${process.env.NODE_ENV === "production" ? backendurl + "/employee":"http://localhost:8081/employee" }`)
             .then((result) => {
                 if (result.data.Status) {
                     setEmployee(result.data.Result);

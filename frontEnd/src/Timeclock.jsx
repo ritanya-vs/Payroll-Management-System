@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
+const backendurl = import.meta.env.VITE_BACKEND;
 
 const Timeclock = () => {
     const [empDailyAtt, setEmpDailyAtt] = useState({
@@ -22,7 +23,7 @@ const Timeclock = () => {
     };
 
     const saveTimeClockData = async(emp_id, att_date, punch_in, punch_out) => {
-        await axios.post(`${process.env.NODE_ENV === "production" ? process.env.BACKEND + "/home/timeclock":"http://localhost:8081/home/timeclock" }`, {
+        await axios.post(`${process.env.NODE_ENV === "production" ? backendurl + "/home/timeclock":"http://localhost:8081/home/timeclock" }`, {
             emp_id,
             att_date,
             punch_in,

@@ -10,12 +10,14 @@ import Timeclock from './Timeclock';
 import Payroll from './Payroll';
 import AddEmployee from './AddEmployee';
 import EditEmployee from './EditEmployee';
+import SignUp from './Signup';
 
 function App(){
   return (
     <BrowserRouter>
       <Routes>
         <Route path = '/' element = {<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path = '/home' element = {<Home />}>
         <Route path = '' element = {<Employee />} />
           <Route path = '/home/attendance' element ={<Attendance />}></Route>

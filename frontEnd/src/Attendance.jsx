@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+const backendurl = import.meta.env.VITE_BACKEND;
 
 const Attendance = () => {
     const [employeeId, setEmployeeId] = useState('');
@@ -13,8 +14,10 @@ const Attendance = () => {
 
     const fetchAttendanceData = async () => {
         try {
-            const response = await axios.get(`${process.env.NODE_ENV === "production" ? process.env.BACKEND + "/home/attendance/${employeeId}/${selectedMonth}":"/home/attendance/${employeeId}/${selectedMonth}" }`);
+            const response = await axios.get(`${process.env.NODE_ENV === "production" ? backendurl + "/home/attendance/${employeeId}/${selectedMonth}":"http://localhost:8081/home/attendance/${employeeId}/${selectedMonth}" }`);
             setAttendanceData(response.data);
+            console.log(response.data);
+            
         } catch (error) {
             console.error('Error fetching attendance data:', error);
         }

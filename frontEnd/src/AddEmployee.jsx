@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
+const backendurl = import.meta.env.VITE_BACKEND;
+
 const AddEmployee = () => {
     const [employee, setEmployee] = useState({
         emp_id: 0,
@@ -22,7 +25,7 @@ const AddEmployee = () => {
     const navigate = useNavigate()
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`${process.env.NODE_ENV === "production" ? process.env.BACKEND + "/home/add_employee":"http://localhost:8081/home/add_employee" }`, employee)
+        axios.post(`${process.env.NODE_ENV === "production" ?  backendurl + "/home/add_employee":"http://localhost:8081/home/add_employee" }`, employee)
             .then(result => {
                 if (result.data.Status) {
                     navigate('/home')

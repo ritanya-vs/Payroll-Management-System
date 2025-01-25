@@ -14,6 +14,7 @@ const convertYearMonthToWords = (yearMonth) => {
 
     return `${monthName} ${year}`;
 };
+const backendurl = import.meta.env.VITE_BACKEND;
 
 const Payroll = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +26,7 @@ const Payroll = () => {
     const handleGeneratePayroll = async () => {
         try {
             setIsLoading(true);
-            const response = await axios.post(`${process.env.NODE_ENV === "production" ? process.env.BACKEND + "/home/payroll":"http://localhost:8081/home/payroll"}`, { yearMonth });
+            const response = await axios.post(`${process.env.NODE_ENV === "production" ? backendurl + "/home/payroll":"http://localhost:8081/home/payroll"}`, { yearMonth });
             setSuccess(true);
             setPayCalcData(response.data.payCalc);
         } catch (error) {

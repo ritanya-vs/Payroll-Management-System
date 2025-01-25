@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const backendurl = import.meta.env.VITE_BACKEND;
 
 const EditEmployee = () => {
     const { emp_id } = useParams()
@@ -16,12 +17,12 @@ const EditEmployee = () => {
         emp_status: ''
     });
     const navigate = useNavigate()
-    useEffect (() => {
-
-        axios.get(`${process.env.NODE_ENV === "production" ? process.env.BACKEND + "/employee/":"http://localhost:8081/employee/" }`+emp_id)
+    useEffect(() => {
+        axios.get(
+            `${process.env.NODE_ENV === "production" ? backendurl + "/employee/" : "http://localhost:8081/employee/"}${emp_id}`
+        )
         .then(result => {
             setEmployee({
-                ...employee,
                 emp_name: result.data.Result[0].emp_name,
                 designation_name: result.data.Result[0].designation_name,
                 department_name: result.data.Result[0].department_name,
@@ -30,9 +31,10 @@ const EditEmployee = () => {
                 marital_status: result.data.Result[0].marital_status,
                 basic_pay: result.data.Result[0].basic_pay,
                 emp_status: result.data.Result[0].emp_status
-            })
-        }).catch(err => console.log(err))
-    },[])
+            });
+        })
+        .catch(err => console.log(err));
+    }, [emp_id]);
 
     const handleSubmit = (e) => {
         e.preventDefault()
