@@ -13,7 +13,7 @@ const Attendance = () => {
 
     const fetchAttendanceData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8081/home/attendance/${employeeId}/${selectedMonth}`);
+            const response = await axios.get(`${process.env.NODE_ENV === "production" ? process.env.BACKEND + "/home/attendance/${employeeId}/${selectedMonth}":"/home/attendance/${employeeId}/${selectedMonth}" }`);
             setAttendanceData(response.data);
         } catch (error) {
             console.error('Error fetching attendance data:', error);

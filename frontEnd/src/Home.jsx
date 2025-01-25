@@ -3,7 +3,9 @@ import axios from 'axios'
 import { Link, Outlet } from 'react-router-dom';
 import "bootstrap-icons/font/bootstrap-icons.css";
 
+
 function Home(){
+
     
     return (
         <div className = "container-fluid">

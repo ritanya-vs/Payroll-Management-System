@@ -5,15 +5,17 @@ import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+const backendurl = import.meta.env.VITE_BACKEND_DOMAIN;
 function Login(){
+    console.log(backendurl);
+    console.log("helo")
     const[email,setEmail] = useState('')
     const[password,setPassword] = useState('')
     const [error, setError] = useState('');
     const navigate = useNavigate();
     function handleSubmit(event){
         event.preventDefault();
-        axios.post('http://localhost:8081/login',{email,password})
+        axios.post(`${process.env.NODE_ENV === "production" ? process.env.BACKEND + "/login":"http://localhost:8081/login" }`,{email,password})
         .then(res=> {
             console.log(res);
             document.body.classList.add('logged-in');

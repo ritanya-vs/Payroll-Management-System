@@ -17,7 +17,8 @@ const EditEmployee = () => {
     });
     const navigate = useNavigate()
     useEffect (() => {
-        axios.get('http://localhost:8081/employee/'+emp_id)
+
+        axios.get(`${process.env.NODE_ENV === "production" ? process.env.BACKEND + "/employee/":"http://localhost:8081/employee/" }`+emp_id)
         .then(result => {
             setEmployee({
                 ...employee,

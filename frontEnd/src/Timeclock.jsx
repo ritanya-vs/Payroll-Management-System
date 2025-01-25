@@ -21,8 +21,8 @@ const Timeclock = () => {
         saveTimeClockData(empDailyAtt.emp_id, empDailyAtt.att_date, '', currentTime);
     };
 
-    const saveTimeClockData = (emp_id, att_date, punch_in, punch_out) => {
-        axios.post(`${process.env.NODE_ENV === "production" ? process.env.DOMAIN + "/home/timeclock":"http://localhost:8081/home/timeclock" }`, {
+    const saveTimeClockData = async(emp_id, att_date, punch_in, punch_out) => {
+        await axios.post(`${process.env.NODE_ENV === "production" ? process.env.BACKEND + "/home/timeclock":"http://localhost:8081/home/timeclock" }`, {
             emp_id,
             att_date,
             punch_in,

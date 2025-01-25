@@ -1,9 +1,19 @@
 const express = require('express');
 const mysql = require('mysql')
 const cors = require('cors')
+const dotenv = require("dotenv")
+
+dotenv.config();
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
+  
 app.use(express.json());
 
 const db = mysql.createConnection({
@@ -12,6 +22,15 @@ const db = mysql.createConnection({
     password: 'VgDrAIHzR8',
     database: 'sql12759357'
 });
+
+db.connect((err) => {
+    if (err) {
+      console.error('Error connecting to MySQL:', err.message);
+    } else {
+      console.log('Connected to the database!');
+    }
+  });
+
 
 app.post('/login', (req, res) => {
     const sql = "SELECT * FROM login WHERE login_id = ? AND password = ?";
@@ -188,5 +207,5 @@ app.post('/home/payroll', (req, res) => {
 
 
 app.listen(process.env.PORT, () => {
-    console.log("listening");
+    console.log(`listening on port:${process.env.PORT}`);
 });
