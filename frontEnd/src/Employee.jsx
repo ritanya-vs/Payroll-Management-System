@@ -29,6 +29,7 @@ const Employee = () => {
             .then(result => {
                 if (result.data.Status) {
                     console.log("Delete successful:", result.data); // Logs the response if the delete was successful
+                    navigate('/home');
                     window.location.reload();
                 } else {
                     console.error("Error deleting employee:", result.data.Error); // Logs error message from the response
