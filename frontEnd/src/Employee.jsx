@@ -20,16 +20,26 @@ const Employee = () => {
             .catch((err) => console.log(err));
     }, []);
 
-    const handleDelete = (emp_id) =>{
-        axios.delete(`${process.env.NODE_ENV === "production" ? backendurl + "/delete_employee/":"http://localhost:8081/delete_employee/" }`+emp_id)
-        .then(result => {
-            if(result.data.Status) {
-                window.location.reload()
-            } else {
-                alert(result.data.Error)
-            }
-        })
-    }
+    const handleDelete = (emp_id) => {
+        const deleteUrl = `${process.env.NODE_ENV === "production" ? backendurl + "/delete_employee/" : "http://localhost:8081/delete_employee/"}${emp_id}`;
+        
+        console.log("DELETE request URL:", deleteUrl); // Logs the generated URL for debugging
+    
+        axios.delete(deleteUrl)
+            .then(result => {
+                if (result.data.Status) {
+                    console.log("Delete successful:", result.data); // Logs the response if the delete was successful
+                    window.location.reload();
+                } else {
+                    console.error("Error deleting employee:", result.data.Error); // Logs error message from the response
+                    alert(result.data.Error);
+                }
+            })
+            .catch(err => {
+                console.error("Error in DELETE request:", err); // Logs any unexpected errors
+            });
+    };
+    
     return (
         <div className='px-5 mt-3'>
             <div className='d-flex justify-content-center'>

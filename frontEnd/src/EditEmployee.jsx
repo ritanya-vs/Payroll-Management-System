@@ -38,7 +38,7 @@ const EditEmployee = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put(`${process.env.NODE_ENV === "production" ? backendurl + "/edit_employee/" : "http://localhost:8081/edit_employee/"}${emp_id}`+emp_id, employee)
+        axios.put(`${process.env.NODE_ENV === "production" ? backendurl + "/edit_employee/" : "http://localhost:8081/edit_employee/"}${emp_id}`, employee)
         .then(result => {
             if(result.data.Status) {
                 navigate('/home')
