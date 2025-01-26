@@ -21,7 +21,7 @@ const Employee = () => {
     }, []);
 
     const handleDelete = (emp_id) =>{
-        axios.delete('http://localhost:8081/delete_employee/'+emp_id)
+        axios.delete(`${process.env.NODE_ENV === "production" ? backendurl + "/delete_employee/":"http://localhost:8081/delete_employee/" }`+emp_id)
         .then(result => {
             if(result.data.Status) {
                 window.location.reload()

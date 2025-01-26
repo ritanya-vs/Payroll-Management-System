@@ -14,7 +14,7 @@ const Attendance = () => {
 
     const fetchAttendanceData = async () => {
         try {
-            const response = await axios.get(`${process.env.NODE_ENV === "production" ? backendurl + "/home/attendance/${employeeId}/${selectedMonth}":"http://localhost:8081/home/attendance/${employeeId}/${selectedMonth}" }`);
+            const response = await axios.get(`${process.env.NODE_ENV === "production" ? `${backendurl}/home/attendance/${employeeId}/${selectedMonth}` : `http://localhost:8081/home/attendance/${employeeId}/${selectedMonth}`}`);
             setAttendanceData(response.data);
             console.log(response.data);
             
