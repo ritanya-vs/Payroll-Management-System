@@ -71,6 +71,7 @@ app.post("/signup", (req, res) => {
         req.body.emp_status,
         req.body.entry_user_id
     ];
+
     db.query(sql, values, (err, result) => {
         if (err) return res.json({ Status: false, Error: "Query Error" });
         else {
@@ -81,7 +82,7 @@ app.post("/signup", (req, res) => {
                 ], (err, response) => {
                     if (err) {
                         console.log(err);
-                        
+
                         return res.status(500).json({ message: "Error in adding details into the login table" });
                     }
                     else {
@@ -91,34 +92,8 @@ app.post("/signup", (req, res) => {
             )
         }
     });
-    // const sqlquery1 = `insert into employee (emp_id,emp_name, designation_name, dob, doj, dor, mobile_number, email, marital_status, basic_pay,
-    //     emp_status, entry_user_id,entry_date) values (?,?,?,?,?,?,?,?,?,?,?,?,CURDATE())`
-    // db.query(sqlquery1, [
-    //     emp_id, emp_name, designation_name, department_name, dob, doj, dor, mobile_number, email, marital_status, basic_pay,
-    //     emp_status, entry_user_id
-    // ], (err, response) => {
-    //     if (err) {
-    //         console.log(err);
-
-    //         return res.status(500).json({ message: "Error in entering details into employee table" })
-    //     }
-    //     else {
-    //         const query2 = `insert into login(emp_id,login_id, password) values(?,?,?)`
-    //         db.query(query2,
-    //             [
-    //                 emp_id, login_id, password
-    //             ],(err,response)=>{
-    //                 if(err){
-    //                     return res.status(500).json({message:"Error in adding details into the login table"});
-    //                 }
-    //                 else{
-    //                     return res.status(200).json({message:"Sign up successful"})
-    //                 }
-    //             }
-    //         )
-    //     }
-    // })
 })
+
 app.post('/login', (req, res) => {
     const sql = "SELECT * FROM login WHERE login_id = ? AND password = ?";
     db.query(sql, [req.body.email, req.body.password], (err, data) => {
@@ -205,15 +180,16 @@ app.delete('/delete_employee/:emp_id', (req, res) => {
 app.post('/home/timeclock', (req, res) => {
     const { emp_id, att_date, punch_in, punch_out } = req.body;
 
-
-    const sqlCheck = "SELECT * FROM emp_daily_att WHERE emp_id = ? AND att_date = ?";
+    const sqlCheck = "SELECT * FROM emp_daily_att WHERE emp_id = ?";
+    db.query("select * from emp_daily_att WHERE emp_id = ?",[emp_id],(err,res)=>{
+        console.log(res);
+    })
     db.query(sqlCheck, [emp_id, att_date], (err, result) => {
         if (err) {
             return res.status(500).json({ error: 'Query Error' });
         }
 
         if (result.length > 0) {
-
             const sqlUpdate = "UPDATE emp_daily_att SET punch_out = ? WHERE emp_id = ? AND att_date = ?";
             db.query(sqlUpdate, [punch_out, emp_id, att_date], (err, result) => {
                 if (err) {
@@ -222,7 +198,6 @@ app.post('/home/timeclock', (req, res) => {
                 return res.json({ Status: true, Message: "Record updated successfully" });
             });
         } else {
-
             const sqlInsert = "INSERT INTO emp_daily_att (emp_id, att_date, punch_in, punch_out) VALUES (?, ?, ?, ?)";
             db.query(sqlInsert, [emp_id, att_date, punch_in, punch_out], (err, result) => {
                 if (err) {
